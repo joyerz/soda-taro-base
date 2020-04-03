@@ -1,0 +1,21 @@
+@import './var.scss';
+
+/* Custom Theme */
+$color-brand: $color-theme;
+$color-brand-light: #ff6c64;
+$color-brand-dark: #cc2f26;
+
+$color-grey-3: #8E8E93;
+
+$at-button-height: 86px;   // 按钮高度
+
+$border-radius-sm: 4px;  // 按钮圆角
+$border-radius-md: 4px;  // 按钮圆角
+$border-radius-lg: 4px;  // 按钮圆角
+
+$spacing-v-lg: 22px;     // input padding
+$color-border-light: $color-grey-3;     // input 边框
+
+/* 改变主题变量，具体变量名可查看 taro-ui/dist/style/variables/default.scss 文件 */
+/* 引入 Taro UI 默认样式 */
+// @import "../../../node_modules/taro-ui/dist/style/components/icon.scss";

@@ -1,0 +1,17 @@
+@import "./index";
+
+body {
+  font-size: px(14);
+  color: $color-font;
+  font-family: $font-regular !important;
+  background: #ffffff;
+}
+
+.taro-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/*========== taro UI  style reset ==========*/

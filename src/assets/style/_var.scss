@@ -1,0 +1,27 @@
+@import './function';
+
+
+$color-font:         #333333;    // 正文字体颜色
+$color-theme:        #000000;    // 主题色
+$color-green:        #2BCA79;    // 绿
+$color-grey:         #8E8E93;    // 中灰
+$color-light-grey:   #DCDCDC;    // 浅灰
+$color-dark-blue:    #252235;    // 深蓝
+
+
+$font-regular: PingFangSC-Regular;  // 字体-常规
+$font-medium:  PingFangSC-Medium;   // 字体-粗
+
+
+
+// 动画
+@keyframes slidUp {
+  from {
+    opacity: .3;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

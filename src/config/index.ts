@@ -1,9 +1,10 @@
+import { isH5 } from 'utils/common'
 
 // 应用版本
 export const VERSION = '1.0.0'
 
 // 应用名称
-export const APP_NAME = 'app'
+export const APP_NAME = 'taro_app'
 
 // api
 export const API_HOST = {

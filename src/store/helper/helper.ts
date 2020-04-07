@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import Immutable from 'seamless-immutable'
+import SeamlessImmutable from 'seamless-immutable'
 
 /**
  * @desc normal
@@ -8,7 +8,7 @@ import Immutable from 'seamless-immutable'
  */
 export const buildRedux = (actionName, defaultData = {}) => {
   const initialState = () =>
-    Immutable({
+    SeamlessImmutable({
       loading: false,
       error: false,
       success: false,
@@ -35,26 +35,26 @@ export const buildRedux = (actionName, defaultData = {}) => {
 
   const reducer = handleActions(
     {
-      [START]: (state, action) =>
+      [START]: (state, { payload = {} } = {}) =>
         state.merge({
           loading: true,
           error: false,
           success: false,
-          params: action.payload && action.payload.params,
+          params: payload.params,
         }, {
           deep: true,
         }),
-      [SUCCESS]: (state, action) =>
+      [SUCCESS]: (state, { payload = {} } = {}) =>
         state.merge({
           loading: false,
           error: false,
           success: true,
-          data: action.payload && action.payload.data,
+          data: payload.data,
         }, {
           deep: true,
         }),
       [ERROR]: () =>
-        Immutable({
+        SeamlessImmutable({
           loading: false,
           error: true,
           success: false,

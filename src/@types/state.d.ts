@@ -18,11 +18,8 @@ interface TState {
   Index: {
     list: InitState<Entries>
   }
+	Coupon: {
+		list: InitState<Entries>
+	}
+	// __PUSH_DATA
 }
-
-const state: InitState = {
-  loading: true,
-
-}
-
-console.log(state)

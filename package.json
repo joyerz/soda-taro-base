@@ -42,6 +42,8 @@
 		"@tarojs/taro-swan": "2.0.7",
 		"@tarojs/taro-tt": "2.0.7",
 		"@tarojs/taro-weapp": "2.0.7",
+		"@types/redux-actions": "^2.6.1",
+		"@types/seamless-immutable": "^7.1.11",
 		"@types/wx-js-sdk-dt": "^1.4.3",
 		"babel-runtime": "^6.26.0",
 		"nerv-devtools": "^1.5.6",

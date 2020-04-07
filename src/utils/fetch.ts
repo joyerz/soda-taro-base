@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro'
 import userManager from 'services/userManage'
+import { isH5 } from './common'
 // import { API_HOST as API } from '../config'
 // import LINK from './link'
 
@@ -65,7 +66,7 @@ export default function fetch(params: Params = {},) {
     ...userManager.getRequestHeader(),
   }
 
-  const isFormData = (data instanceof FormData)
+  const isFormData = isH5 && (data instanceof FormData)
 
   if (!isFormData) {
     requestHeader['content-type'] = 'application/json'
@@ -140,7 +141,7 @@ async function errHandler(err, params, paramsStrKey) {
   // }
 
   Taro.showToast({
-    title: err.message + '',
+    title: (err.message || err.errMsg) + '' ,
     icon: 'none',
     duration: 1700
   })

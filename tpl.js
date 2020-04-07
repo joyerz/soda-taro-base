@@ -17,26 +17,32 @@ if (!dirName) {
  * 模板
  */
 const funName = toHump(dirName).replace(/\-/g, '_')
-const tsxTpl = `import Taro, { Component } from '@tarojs/taro'
+let tsxTpl = `import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { bindActionCreators } from 'redux'
-import { connect } from '@tarojs/redux'
-import { } from './redux'
+import { connect, } from '@tarojs/redux'
+import { Actions } from 'store/helper/actions'
 
 import style from './index.module.scss'
 
-type Props = {
-
+interface Props {
+  list: InitState<Entries>
 }
 
-type State = {
-  
+interface State {
+  state1: string
 }
 
+@connect((state: TState) => ({
+  list: state.${funName}.list
+}))
 class ${funName} extends Component<Props, State> {
 
   config = {
     navigationBarTitleText: '${funName}'
+  }
+
+  componentDidMount() {
+    Actions.${funName}.start()
   }
 
   render() {
@@ -48,33 +54,32 @@ class ${funName} extends Component<Props, State> {
   }
 }
 
-export default connect(
-  (state: TState) => {
-    return {
-      // TODO...
-    }
-  },
-  dispatch => bindActionCreators(
-    {
-      // TODO...
-    },
-    dispatch,
-  ),
-)(${funName})
+export default ${funName}
 
 `
 
-const scssTpl = `// @import '../../assets/style/index';
+let scssTpl = `// d@import '../../assets/style/index';
 
 .index {
   color: black;
 }`
 
-const reduxTpl = `import { buildRedux } from 'store/helper'
+let reduxTpl = `import { buildRedux } from 'store/helper'
 import { combineReducers } from 'redux'
+import api from 'config/api'
+
+export type DemoPayload = Payload<{
+  id: number
+  page: number
+}>
 
 export const list = buildRedux('${funName}')({
-
+  url: api.login,  // * (payload, {getState}) => '/url'
+  method: 'get',
+  // *data(payload, { put }) { return {} },  // * 请求发送的数据处理，返回一个新的
+  // *onResult(res, payload: DemoPayload, { put }) { return {} },   // * 处理数据返回一个新的数据
+  // *onAfter() {},  // * action.success 后 执行的操作
+  // *onError() {},  // *  错误处理
 })
 
 export default combineReducers({
@@ -85,22 +90,25 @@ export default combineReducers({
 const pageTplConf = [
   {
     filename: 'index.tsx',
-    tpl: tsxTpl,
+    tplFilename: 'ztpl_tsx.tpl',
+    tplstr: tsxTpl,
   },
   {
     filename: 'index.module.scss',
-    tpl: scssTpl,
+    tplFilename: 'ztpl_scss.tpl',
+    tplstr: scssTpl,
   },
   {
     filename: 'redux.ts',
-    tpl: reduxTpl,
+    tplFilename: 'ztpl_redux.tpl',
+    tplstr: reduxTpl,
   },
 ]
 
 const _dirPwd = path.resolve(`./src/pages/${dirName.replace(/^\//, '')}`)
 const reducerPwd = path.resolve(`./src/store/reducers.ts`)
 
-if (fs.existsSync(`${_dirPwd}/index.ts`)) {
+if (fs.existsSync(`${_dirPwd}/index.tsx`)) {
   inquirer
     .prompt([
       {
@@ -135,6 +143,12 @@ function run(exisit) {
       '// __PUSH_DATA': `${dirName.toLocaleUpperCase().replace('/', '_')}: '/pages/${dirName}/index',\n\t// __PUSH_DATA`
     })
 
+    // 新增src/@types/state.d.ts 中的默认接口
+    replaceTpl('./src/@types/state.d.ts', `${funName}: {\n\t\tlist: InitState<Entries>\n\t}\n\t// __PUSH_DATA`)
+
+    // 新增src/@types/actions.d.ts 中的默认接口
+    replaceTpl('./src/@types/actions.d.ts', `${funName}: CommonActions<{ name: string }>\n\t// __PUSH_DATA`)
+
     // 替换config 中的  h5自定义路由 （如果是h5项目的情况下） '/pages/index/index': '/index',
     replaceTpl(
       './config/index.js',
@@ -157,7 +171,15 @@ function run(exisit) {
 
   // 写入模板
   for (let tpl of pageTplConf) {
-    fs.writeFileSync(tpl.filename, tpl.tpl)
+    let tplpath = path.resolve(__dirname, `./${tpl.tplFilename}`)
+    if (fs.existsSync(tplpath)) {
+      let _str = fs.readFileSync(tplpath, 'utf-8')
+      if (_str) {
+        tpl.tplstr = _str.replace(/\$\{funName\}/g, funName)
+                         .replace(/\$\{dirName\}/g, dirName.toLocaleLowerCase())
+      }
+    }
+    fs.writeFileSync(tpl.filename, tpl.tplstr)
     console.log(msg + chalk.green(`/src/pages/${dirName}/` + tpl.filename))
   }
 

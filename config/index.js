@@ -46,6 +46,12 @@ const config = {
     'pages': path.resolve(__dirname, '..', 'src/pages'),
     'src': path.resolve(__dirname, '..', 'src'),
   },
+  copy: {
+    patterns: [
+      // { from: 'sitemap.json', to: 'dist/asset/tt/', ignore: '*.js' }, // 指定需要 copy 的目录
+      { from: 'sitemap.json', to: 'dist/sitemap.json' } // 指定需要 copy 的文件
+    ]
+  },
   mini: {
     postcss: {
       autoprefixer: {
@@ -77,7 +83,7 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
+    },
   },
   h5: {
     publicPath: '/',
@@ -92,6 +98,7 @@ const config = {
       basename: '/',  // 基准路径的配置
       customRoutes: {   // 自定义路由配置  调用 Taro.navigateTo({ url: '/pages/index/index' }) 后，浏览器地址栏将被变为 http://{{domain}}/#/index
 				'/pages/Index/index': '/index',
+				'/pages/Coupon/index': '/coupon',
 				// __PUSH_CUSTOMROUTERS
       },
     },

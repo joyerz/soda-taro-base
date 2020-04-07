@@ -14,23 +14,25 @@ interface State {
 }
 
 @connect((state: TState) => ({
-  list: state.Index.list
+  list: state.${funName}.list
 }))
-class Index extends Component<Props, State> {
+class ${funName} extends Component<Props, State> {
 
   config = {
-    navigationBarTitleText: 'title'
+    navigationBarTitleText: '${funName}'
   }
 
   componentDidMount() {
-    Actions.IndexBanner.start()
+    Actions.${funName}.start()
   }
 
   render() {
-    return <View className={style.index}>
-      Index created.
+    return (
+      <View className={style.index}>
+        ${dirName} created.
       </View>
+    )
   }
 }
 
-export default Index
+export default ${funName}

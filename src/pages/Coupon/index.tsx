@@ -14,23 +14,25 @@ interface State {
 }
 
 @connect((state: TState) => ({
-  list: state.Index.list
+  list: state.Coupon.list
 }))
-class Index extends Component<Props, State> {
+class Coupon extends Component<Props, State> {
 
   config = {
-    navigationBarTitleText: 'title'
+    navigationBarTitleText: 'Coupon'
   }
 
   componentDidMount() {
-    Actions.IndexBanner.start()
+    Actions.Coupon.start()
   }
 
   render() {
-    return <View className={style.index}>
-      Index created.
+    return (
+      <View className={style.index}>
+        coupon created.
       </View>
+    )
   }
 }
 
-export default Index
+export default Coupon

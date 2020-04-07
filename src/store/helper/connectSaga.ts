@@ -1,17 +1,28 @@
 import { put, call, takeLatest, select, delay } from 'redux-saga/effects'
 import { underScoreToCamel, notNullOrUndefiend } from './common'
 import { options } from './settings'
+import { Actions } from './actions'
+import store from '..'
 
+
+interface CbConfig {
+  put: function
+  call: function
+  getAction(actionName: string): any
+  getState(modelName: string): any
+}
+
+type UrlFn = (payload: any, callbackConfig: CbConfig) => string
 
 type configType = {
-  url: string | Function
-  data?: any
+  url?: string | UrlFn
+  data?: object | UrlFn
   method?: 'get' | 'post' | 'put' | 'delete'
   headers?: any
   extract?: any
-  onResult?: (result?: any, payload?: any, callbackConfig?: any) => Promise
-  onAfter?: (result?: any, payload?: any, callbackConfig?: any) => any
-  onError?: (result?: any, payload?: any, callbackConfig?: any) => any
+  onResult?: (result: any, payload: any, callbackConfig: CbConfig) => Promise
+  onAfter?: (result: any, payload: any, callbackConfig: CbConfig) => Promise
+  onError?: (result: any, payload: any, callbackConfig: CbConfig) => Promise
 }
 
 type reducerType = {
@@ -60,11 +71,21 @@ export default reduxer => (...args) => {
 
   allActions[name] = redux.actions
   reducers[name] = redux.reducer
+  if (Actions[name]) {
+    console.error(`Actions.${name}已存在! 请重新命名。`)
+  }
+  Actions[name] = {}
+
+  for (const action in redux.actions) {
+    Actions[name][action] = payload => store.dispatch(redux.actions[action](payload))
+  }
 
   return (conf: configType): reducerType => {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    const watch = createWatcher(redux, conf)
-    sagas.push(watch)
+    if (conf.url) {   // 如果没有接受到url参数，则不创建对应saga
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      const watch = createWatcher(redux, conf)
+      sagas.push(watch)
+    }
     return redux
   }
 }
@@ -93,13 +114,12 @@ function* createWatcher(redux, conf: configType) {
 
       // data处理
       if (typeof data === 'function') {
-        data = yield data(payload, callbackConfig)
+        data = yield call(data, payload, callbackConfig)
       }
 
       if (Object.prototype.toString.call(data) === '[object Object]' && payload.params) {
         data = {
           ...payload.params,
-          ...data,
         }
       }
 
@@ -108,7 +128,7 @@ function* createWatcher(redux, conf: configType) {
 
       // fetch方法是否定义
       const fetchMethod = fetch ? fetch : options.fetchMethod
-      if (fetchMethod && url) {
+      if (fetchMethod) {
         result = yield call(fetchMethod, {
           url,
           method,
@@ -120,32 +140,27 @@ function* createWatcher(redux, conf: configType) {
 
       // data handler
       if (onResult) {
-        const fallbackResult = yield call(onResult, result || data, payload, callbackConfig)
+        const fallbackResult = yield call(onResult, result, payload, callbackConfig)
 
         // 判断fallbackResult不是null, undefined, 即使是空也要采用
         result = notNullOrUndefiend(fallbackResult)
           ? fallbackResult
           : result
       }
-      // autoActions
-      if (options.autoActions) {
-        yield put(redux.actions.success(result))
-      }
+
+      yield put(redux.actions.success(result))
 
       // after data handled callback
       if (onAfter) {
         yield call(onAfter, result, payload, callbackConfig)
       }
-      if (payload.fn) {
+      if (payload.callback) {
         yield delay(30)
-        yield call(payload.fn, )
+        yield call(payload.callback)
       }
     } catch (err) {
-      payload.fn && payload.fn()
-      // autoActions
-      if (options.autoActions) {
-        yield put(redux.actions.reset())
-      }
+      console.log(err)
+      payload.callback && payload.callback()
 
       // error handler
       if (onError) {

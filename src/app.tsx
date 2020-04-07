@@ -49,7 +49,8 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/Index/index',
-      // __PUSH_DATA
+			'pages/Coupon/index',
+			// __PUSH_DATA
     ],
     window: {
       backgroundTextStyle: 'light',

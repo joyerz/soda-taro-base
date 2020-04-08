@@ -23,7 +23,7 @@ class Coupon extends Component<Props, State> {
   }
 
   componentDidMount() {
-    Actions.Coupon.start()
+    Actions.IndexBanner.start()
   }
 
   render() {

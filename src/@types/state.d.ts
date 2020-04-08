@@ -14,9 +14,14 @@ interface Entries<T> {
   entries: T[]
 }
 
+interface User {
+  nickname: string
+  age: number
+}
+
 interface TState {
   Index: {
-    list: InitState<Entries>
+    list: InitState<Entries<User>>
   }
 	Coupon: {
 		list: InitState<Entries>

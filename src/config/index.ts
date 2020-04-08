@@ -6,6 +6,9 @@ export const VERSION = '1.0.0'
 // 应用名称
 export const APP_NAME = 'taro_app'
 
+// 本地储存前缀
+export const STORAGE_PREFIX = 'APP_'
+
 // api
 export const API_HOST = {
   development: '/api',
@@ -18,13 +21,10 @@ export const isPermission = false
 export const isDev = process.env.NODE_ENV === 'development'
 
 // 日期格式
-export const dateFormat = 'YYYY-MM-DD'
+export const dateFormat = 'YYYY/MM/DD'
 
 // 时间格式
 export const timeFormat = 'HH:mm:ss'
 
 // 日期时间格式
 export const datetimeFormat = dateFormat + ' ' + timeFormat
-
-// 本地储存前缀
-export const STORAGE_PREFIX = 'APP_'

@@ -11,7 +11,7 @@ interface CommonActions<P1 = {}, P2 = {}, P3 = {}> {
 }
 
 interface ActionsD {
-  IndexBanner: CommonActions<{ name: string }>
-	Coupon: CommonActions<{ name: string }>
+  IndexBanner: CommonActions<Payload<{ name: string }>>
+	Coupon: CommonActions<Payload<{ name: string }>>
 	// __PUSH_DATA
 }

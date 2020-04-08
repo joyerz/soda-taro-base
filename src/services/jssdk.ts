@@ -71,9 +71,19 @@ class JSSDK {
       },
       fail: () => {
         // 支付失败
+        Taro.showToast({
+          title: '支付失败',
+          icon: 'none',
+          duration: 1500
+        })
       },
       cancel: function () {
         // 支付取消
+        Taro.showToast({
+          title: '支付取消',
+          icon: 'none',
+          duration: 1500
+        })
       },
     })
   }

@@ -1,8 +1,8 @@
 // mixins
-@mixin flex-pos($pos: center) {
+@mixin flex-pos($v: center, $h: center) {
   display: flex;
-  justify-content: $pos;
-  align-items: center;
+  justify-content: $v;
+  align-items: $h;
 }
 
 @mixin l-h($h) {

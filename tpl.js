@@ -147,7 +147,7 @@ function run(exisit) {
     replaceTpl('./src/@types/state.d.ts', `${funName}: {\n\t\tlist: InitState<Entries>\n\t}\n\t// __PUSH_DATA`)
 
     // 新增src/@types/actions.d.ts 中的默认接口
-    replaceTpl('./src/@types/actions.d.ts', `${funName}: CommonActions<{ name: string }>\n\t// __PUSH_DATA`)
+    replaceTpl('./src/@types/actions.d.ts', `${funName}: CommonActions<Payload<{ name: string }>>\n\t// __PUSH_DATA`)
 
     // 替换config 中的  h5自定义路由 （如果是h5项目的情况下） '/pages/index/index': '/index',
     replaceTpl(

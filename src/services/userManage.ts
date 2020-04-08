@@ -93,53 +93,30 @@ class UserManager {
   /**
    * 登录-密码
    */
-  async loginByPwd({ mobile, password }) {
-    const data = {
-      metadata: { mechanism: "password", },
-      mobile,
-      password,
-    }
-    const res = await fetch({ url: API.login, data, method: 'POST', })
-    this.loginCallback(res)
-    Taro.redirectTo({
-      url: LINK.INDEX,
-    })
-    return res
-  }
-
-  /**
-   * 登录-验证码
-   */
-  async loginByCode(postdata) {
-    const data: any = {
-      metadata: { mechanism: "passwordless", },
-      ...postdata
-    }
-    const existed = await fetch({ url: API.userExisted(data.mobile), })
-    if (!existed) return
-    if (!existed.existed) {   // 不存在用户调用注册接口
-      data['mobile_os'] = Taro.getSystemInfoSync().system
-      const res = this.reg(data)
-      return res
-    }
-    const res = await fetch({ url: API.login, data, method: 'POST', })
-    this.loginCallback(res)
-    await this.getUser()   // 获取用户是否设置密码
-    if (!this.data) return
-    const isInit = this.data.password_status === 'INIT'
-    Taro.navigateTo({ url: isInit ? LINK.USER_INITPASSWORD : LINK.INDEX })
-  }
+  // async loginByPwd({ mobile, password }) {
+  //   const data = {
+  //     metadata: { mechanism: "password", },
+  //     mobile,
+  //     password,
+  //   }
+  //   const res = await fetch({ url: API.login, data, method: 'POST', })
+  //   this.loginCallback(res)
+  //   Taro.redirectTo({
+  //     url: LINK.INDEX,
+  //   })
+  //   return res
+  // }
 
   /**
    * 获取用户信息
    * @param {boolean} forceRefresh 强制刷新
    */
-  async getUser(forceRefresh = false) {
-    if (this.data && !forceRefresh) return this.data
-    const user = await fetch({ url: API.user, })
-    this.data = user
-    return user
-  }
+  // async getUser(forceRefresh = false) {
+  //   if (this.data && !forceRefresh) return this.data
+  //   const user = await fetch({ url: API.user, })
+  //   this.data = user
+  //   return user
+  // }
 
   /**
    * 登录成功回调

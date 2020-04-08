@@ -49,7 +49,6 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/Index/index',
-			'pages/Coupon/index',
 			// __PUSH_DATA
     ],
     window: {

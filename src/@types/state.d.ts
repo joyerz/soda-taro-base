@@ -23,8 +23,5 @@ interface TState {
   Index: {
     list: InitState<Entries<User>>
   }
-	Coupon: {
-		list: InitState<Entries>
-	}
 	// __PUSH_DATA
 }

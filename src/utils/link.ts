@@ -5,7 +5,6 @@ import Taro from '@tarojs/taro'
  */
 const LINK = {
 	INDEX: '/pages/Index/index',
-	COUPON: '/pages/Coupon/index',
 	// __PUSH_DATA
 }
 

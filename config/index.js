@@ -98,7 +98,6 @@ const config = {
       basename: '/',  // 基准路径的配置
       customRoutes: {   // 自定义路由配置  调用 Taro.navigateTo({ url: '/pages/index/index' }) 后，浏览器地址栏将被变为 http://{{domain}}/#/index
 				'/pages/Index/index': '/index',
-				'/pages/Coupon/index': '/coupon',
 				// __PUSH_CUSTOMROUTERS
       },
     },

@@ -1,4 +1,4 @@
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { Component, CommonPageConfig } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect, } from '@tarojs/redux'
 import { Actions } from 'store/helper/actions'
@@ -18,8 +18,8 @@ interface State {
 }))
 class Index extends Component<Props, State> {
 
-  config = {
-    navigationBarTitleText: 'title'
+  config: CommonPageConfig = {
+    navigationBarTitleText: 'title',
   }
 
   componentDidMount() {

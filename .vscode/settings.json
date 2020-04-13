@@ -1,0 +1,11 @@
+{
+  "typescript.format.enable": true,
+  "json.schemas": [
+    {
+      "fileMatch": [
+          "/package.json"
+      ],
+      "url": "/package.json"
+    }
+  ]
+}

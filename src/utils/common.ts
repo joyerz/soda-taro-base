@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import { STORAGE_PREFIX, } from '../config'
 
-const ua = navigator ? navigator.userAgent : {}
+const ua = navigator ? navigator.userAgent : ''
 
 /**
  * 是否是h5程序
@@ -178,12 +178,12 @@ export function goc(obj, str) {
 export const blurAdjust = () => {
   if (!isH5) return
   setTimeout(() => {
-    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+    if (['INPUT', 'TEXTAREA'].includes(document?.activeElement?.tagName || '')) {
       return
     }
     if (/(iPhone|iPad|iPod|iOS)/i.test(ua)) {
       try {
-        document.activeElement.scrollIntoViewIfNeeded()
+        document?.activeElement?.scrollIntoViewIfNeeded()
       } catch (error) {
         console.log(error)
       }

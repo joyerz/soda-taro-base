@@ -1,6 +1,7 @@
 import { put, call, takeLatest, select, delay } from 'redux-saga/effects'
+import fetchMethod from 'utils/fetch'
 import { underScoreToCamel, notNullOrUndefiend } from './common'
-import { options } from './settings'
+// import { options } from './settings'
 import { Actions } from './actions'
 import store from '..'
 
@@ -51,7 +52,6 @@ const effects = {
 // 全局的redux actions
 export const allActions = {}
 export const sagas = []
-export const reducers = {}
 
 // 获取全局的action
 const getAction = (actionName) => allActions[actionName]
@@ -70,7 +70,7 @@ export default reduxer => (...args) => {
   const name = underScoreToCamel(args[0])
 
   allActions[name] = redux.actions
-  reducers[name] = redux.reducer
+  
   if (Actions[name]) {
     console.error(`Actions.${name}已存在! 请重新命名。`)
   }
@@ -100,7 +100,7 @@ function* createWatcher(redux, conf: configType) {
   yield takeLatest(redux.types.START, function* ({ payload }) {
     conf = conf || {}
     // eslint-disable-next-line prefer-const
-    let { url, data = {}, method, headers = {}, extract = {}, onResult, onAfter, onError, fetch } = conf
+    let { url, data = {}, method, headers = {}, extract = {}, onResult, onAfter, onError, } = conf
 
     const callbackConfig = {
       ...effects,
@@ -127,16 +127,14 @@ function* createWatcher(redux, conf: configType) {
       let result
 
       // fetch方法是否定义
-      const fetchMethod = fetch ? fetch : options.fetchMethod
-      if (fetchMethod) {
-        result = yield call(fetchMethod, {
-          url,
-          method,
-          data,
-          headers,
-          ...extract,
-        })
-      }
+      result = yield call(fetchMethod, {
+        url,
+        method,
+        data,
+        headers,
+        ...extract,
+      })
+
 
       // data handler
       if (onResult) {

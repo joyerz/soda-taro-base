@@ -2,3 +2,7 @@ config/
 dist/
 tpl.js
 test.js
+jest.config.js
+tsconfig.js
+
+__tests__/

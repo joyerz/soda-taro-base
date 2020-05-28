@@ -178,12 +178,13 @@ export function goc(obj, str) {
 export const blurAdjust = () => {
   if (!isH5) return
   setTimeout(() => {
-    if (['INPUT', 'TEXTAREA'].includes(document?.activeElement?.tagName || '')) {
+    if (!document.activeElement) return
+    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName || '')) {
       return
     }
     if (/(iPhone|iPad|iPod|iOS)/i.test(ua)) {
       try {
-        document?.activeElement?.scrollIntoViewIfNeeded()
+        document.activeElement.scrollIntoViewIfNeeded()
       } catch (error) {
         console.log(error)
       }
@@ -198,7 +199,7 @@ export const blurAdjust = () => {
  * @param {*} wait 间隔时间
  */
 export const debounce = (fn, wait) => {
-  let timer = null
+  let timer: any = null
   wait = wait || 200
   return (...args) => {
     if (timer) clearTimeout(timer)
@@ -247,7 +248,7 @@ export const loadScript = (url, id) => {
     return loadScriptCache[id]
   }
   loadScriptCache[id] = new Promise((resolve) => {
-    const script = document.createElement('script')
+    const script: any = document.createElement('script')
     script.type = 'text/javascript'
     script.src = url
     script.id = id
@@ -308,7 +309,7 @@ export function numberHandler(target, nullFill = '-', fixedNum = 1) {
  * @param {*} s
  * @param {*} fixedNum 显示几位（默认显示1位小数）
  */
-export const sTohour = (s, fixedNum) => numberHandler(s ? s / 60 / 60 : 0, 0, fixedNum)
+export const sTohour = (s: any, fixedNum: any) => numberHandler(s ? s / 60 / 60 : 0, 0 as any, fixedNum)
 
 /**
  * m 转换为 km
@@ -316,7 +317,7 @@ export const sTohour = (s, fixedNum) => numberHandler(s ? s / 60 / 60 : 0, 0, fi
  * @param {*} nullFill 为空 填充 默认为 0
  * @param {*} fixedNum 显示几位（默认显示1位小数）
  */
-export const mTokm = (m, nullFill = 0, fixedNum) => numberHandler(m / 1000, nullFill, fixedNum)
+export const mTokm = (m, nullFill = 0, fixedNum) => numberHandler(m / 1000, nullFill as any, fixedNum)
 
 /**
  * 1 - 9的数字转换为 01 02 ...
@@ -430,7 +431,7 @@ export const formatDateHasWeek = date => {
  * @param times
  * @return {Promise}
  */
-export const isReady = (condition, times) => {
+export const isReady = (condition, times = 30) => {
   return new Promise(resolve => {
     let count = 0
     const checkReady = () => {
@@ -462,9 +463,9 @@ export const obj2params = (obj, prefix = '', suffix = '') => {
   Object.keys(obj).forEach(key => {
     if (obj[key] !== undefined && obj[key] !== null) {
       if (obj[key] instanceof Object) { // 数组和对象特殊处理
-        params.push(`${key}=${JSON.stringify(obj[key])}`)
+        params.push(`${key}=${JSON.stringify(obj[key])}` as never)
       } else {
-        params.push(`${key}=${obj[key]}`)
+        params.push(`${key}=${obj[key]}` as never)
       }
     }
   })

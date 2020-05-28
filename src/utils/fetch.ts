@@ -45,7 +45,7 @@ let loadingCache = 0     // 控制loading持续显示
  * @param {Object} params.header header
  * @param {Boolean} params.loadingTxt loading 文字 默认为加载中，为空则不显示loading
  */
-export default function fetch(params: Params = {},) {
+export default function fetch(params: Params = {} as any,) {
 
   const paramsStrKey = JSON.stringify(params)
 
@@ -88,9 +88,9 @@ export default function fetch(params: Params = {},) {
   return fetchCache[paramsStrKey] =
     Taro.request({
       url,
-      method: _method,
+      method: _method as never,
       data: _data,
-      dataType: 'String',
+      dataType: 'String' as 'json',
       responseType: 'text',    // ! responseType 和 dataType 的设置为了 一些操作成功请求无返回值导致 框架内部的 parse 报错从而进不了我们自己程序的错误处理程序。手动做一次parse
       header: requestHeader,
     })

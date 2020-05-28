@@ -1,5 +1,3 @@
-import { isH5 } from 'utils/common'
-
 // 应用版本
 export const VERSION = '1.0.0'
 
@@ -13,7 +11,9 @@ export const STORAGE_PREFIX = 'APP_'
 export const API_HOST = {
   development: '/api',
   production: '',
-}[process.env.NODE_ENV]
+}[process.env.NODE_ENV as any]
+
+export const WX_APP_ID = ''
 
 // 开启权限验证
 export const isPermission = false

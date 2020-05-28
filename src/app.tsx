@@ -24,7 +24,7 @@ if (isH5) {
     location.href += (location.href.includes('?') ? '&' : '?') + `__t=${Math.random()}`
     window.name = 'isReload'
   }
-  window.onerror = e => {
+  window.onerror = (e: string) => {
     if (e.match('Can not find proper registered route for')) {
       location.href = '/'
     }

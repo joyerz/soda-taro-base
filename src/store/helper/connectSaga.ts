@@ -7,8 +7,8 @@ import store from '..'
 
 
 interface CbConfig {
-  put: function
-  call: function
+  put: () => void
+  call: () => void
   getAction(actionName: string): any
   getState(modelName: string): any
 }
@@ -21,9 +21,9 @@ type configType = {
   method?: 'get' | 'post' | 'put' | 'delete'
   headers?: any
   extract?: any
-  onResult?: (result: any, payload: any, callbackConfig: CbConfig) => Promise
-  onAfter?: (result: any, payload: any, callbackConfig: CbConfig) => Promise
-  onError?: (result: any, payload: any, callbackConfig: CbConfig) => Promise
+  onResult?: (result: any, payload: any, callbackConfig: CbConfig) => Promise<any>
+  onAfter?: (result: any, payload: any, callbackConfig: CbConfig) => Promise<any>
+  onError?: (result: any, payload: any, callbackConfig: CbConfig) => Promise<any>
 }
 
 type reducerType = {
@@ -51,7 +51,7 @@ const effects = {
 
 // 全局的redux actions
 export const allActions = {}
-export const sagas = []
+export const sagas: any[] = []
 
 // 获取全局的action
 const getAction = (actionName) => allActions[actionName]
@@ -97,12 +97,12 @@ export default reduxer => (...args) => {
  * @return {IterableIterator<ForkEffect>}
  */
 function* createWatcher(redux, conf: configType) {
-  yield takeLatest(redux.types.START, function* ({ payload }) {
+  yield takeLatest(redux.types.START, function* ({ payload }: any) {
     conf = conf || {}
     // eslint-disable-next-line prefer-const
     let { url, data = {}, method, headers = {}, extract = {}, onResult, onAfter, onError, } = conf
 
-    const callbackConfig = {
+    const callbackConfig: any = {
       ...effects,
       getAction: getAction,
       getState: getState,
@@ -110,11 +110,11 @@ function* createWatcher(redux, conf: configType) {
     try {
       // url处理
       url = typeof url === 'function' ? yield url(payload, callbackConfig) : url
-      method = method ? method.toUpperCase() : 'GET'
+      method = (method ? method.toUpperCase() : 'GET') as never
 
       // data处理
       if (typeof data === 'function') {
-        data = yield call(data, payload, callbackConfig)
+        data = yield call(data as any, payload, callbackConfig)
       }
 
       if (Object.prototype.toString.call(data) === '[object Object]' && payload.params) {

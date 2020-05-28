@@ -13,9 +13,9 @@ export function obj2params(obj, prefix = '', suffix = '') {
   Object.keys(obj).forEach(key => {
     if (obj[key] !== undefined && obj[key] !== null) {
       if (obj[key] instanceof Object) { // 数组和对象特殊处理
-        params.push(`${key}=${JSON.stringify(obj[key])}`)
+        params.push(`${key}=${JSON.stringify(obj[key])}` as never)
       } else {
-        params.push(`${key}=${obj[key]}`)
+        params.push(`${key}=${obj[key]}` as never)
       }
     }
   })

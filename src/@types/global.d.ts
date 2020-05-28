@@ -18,8 +18,6 @@ declare const process: {
   }
 }
 
-declare const location: any
-
 declare interface Immutable {
   (data: any): {
     merge: boolean

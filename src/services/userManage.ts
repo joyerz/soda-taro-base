@@ -1,15 +1,13 @@
-import Taro from '@tarojs/taro'
 import { isReady, storage, goc } from 'utils/common'
 import fetch from 'utils/fetch'
-import LINK from 'utils/link'
 import { API_HOST as API } from '../config'
 
 class UserManager {
   TOKEN_KEY = 'TOKEN'
-  afterLoginCb = [] // 登陆成功后的回调
-  afterLogoutCb = [] // 退出成功后的回调
+  afterLoginCb: any[] = [] // 登陆成功后的回调
+  afterLogoutCb: any[] = [] // 退出成功后的回调
   data = null // 用户信息
-  token = null // token
+  token: any = null // token
   tokenRefreshing = false // 是否正在刷新token
 
   constructor() {
@@ -129,29 +127,21 @@ class UserManager {
     return res
   }
 
-  /**
-   * 注册
-   */
-  async reg(data) {
-    const res = await fetch({ url: API.userReg, method: 'POST', data, })
-    this.loginCallback(res)
-    Taro.navigateTo({ url: LINK.USER_INITPASSWORD })
-  }
 
   /**
    * 发送验证码
    */
-  async sendVcode({ mobile }) {
-    // 先获取是否存在状态
-    const existed = await fetch({ url: API.userExisted(mobile), })
-    const data = {
-      "channel": "MOBILE",
-      "method": "SMS",
-      "target": mobile,
-      "existed": existed.existed,
-    }
-    return fetch({ url: API.vcode, data, method: 'POST', })
-  }
+  // async sendVcode({ mobile }) {
+  //   // 先获取是否存在状态
+  //   const existed = await fetch({ url: API.userExisted(mobile), })
+  //   const data = {
+  //     "channel": "MOBILE",
+  //     "method": "SMS",
+  //     "target": mobile,
+  //     "existed": existed.existed,
+  //   }
+  //   return fetch({ url: API.vcode, data, method: 'POST', })
+  // }
 
   /**
    * 刷新token
@@ -213,9 +203,9 @@ class UserManager {
 
     this.doAfterLogout()
 
-    Taro.redirectTo({
-      url: LINK.USER_LOGINBYCODE,
-    })
+    // Taro.redirectTo({
+    //   url: LINK.USER_LOGINBYCODE,
+    // })
   }
 }
 

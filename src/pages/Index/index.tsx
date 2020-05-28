@@ -6,15 +6,15 @@ import { Actions } from 'store/helper/actions'
 import style from './index.module.scss'
 
 interface Props {
-  list: InitState<Entries>
+  list?: InitState<Entries>
 }
 
 interface State {
   state1: string
 }
 
-@connect((state: TState) => ({
-  list: state.Index.list
+@connect<Props>((state: TState) => ({
+  list: state.Index.list,
 }))
 class Index extends Component<Props, State> {
 

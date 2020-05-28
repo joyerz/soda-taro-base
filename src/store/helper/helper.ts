@@ -35,7 +35,7 @@ export const buildRedux = (actionName, defaultData = {}) => {
 
   const reducer = handleActions(
     {
-      [START]: (state, { payload = {} } = {}) =>
+      [START]: (state, { payload = {} }: any = {}) =>
         state.merge({
           loading: true,
           error: false,
@@ -44,7 +44,7 @@ export const buildRedux = (actionName, defaultData = {}) => {
         }, {
           deep: true,
         }),
-      [SUCCESS]: (state, { payload = {} } = {}) =>
+      [SUCCESS]: (state, { payload = {} }: any = {}) =>
         state.merge({
           loading: false,
           error: false,

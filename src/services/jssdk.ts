@@ -1,8 +1,8 @@
 import Taro from '@tarojs/taro'
-import { APPID } from 'config/'
 import fetch from 'utils/fetch'
 import api from 'config/api'
 import { isReady, loadScript } from 'utils/common'
+import { WX_APP_ID } from 'config/index'
 
 /**
  * 微信相关
@@ -32,7 +32,7 @@ class JSSDK {
     } = await fetch({ url: api.loadWxSign, method: 'POST', data: { url }, loadingTxt: '' })
     wx.config({
       debug: false, // 调试模式
-      appId: APPID, // this.isNewPlatfrom() ? API.wechat.appIdNew : API.wechat.appId, // 必填，公众号的唯一标识
+      appId: WX_APP_ID, // this.isNewPlatfrom() ? API.wechat.appIdNew : API.wechat.appId, // 必填，公众号的唯一标识
       timestamp, // 必填，生成签名的时间戳
       nonceStr: noncestr, // 必填，生成签名的随机串
       signature, // 必填，签名，见附录1
@@ -47,7 +47,7 @@ class JSSDK {
   getCode(rentalId, backpath) {
     const { location } = window
     const backUrl = location.protocol + '//' + location.hostname + encodeURIComponent(backpath)
-    return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + APPID +
+    return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + WX_APP_ID +
       '&redirect_uri=' + backUrl +
       '&response_type=code&scope=snsapi_base' +
       '&state=' + rentalId + '#wechat_redirect'

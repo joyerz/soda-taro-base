@@ -6,7 +6,7 @@ interface InitState<T = {}> {
   data: T
 }
 
-interface Entries<T> {
+interface Entries<T = any> {
   page: number
   per_page: number
   total_count: number

@@ -1,6 +1,6 @@
 import { toPromise } from "./common"
 
-let canvas = null
+let canvas: any = null
 
 interface ConfigT {
   /**
@@ -22,17 +22,17 @@ interface ConfigT {
  * @param {t} file 
  * @param {*} config 
  */
-export default function compress(file: File, config: ConfigT = {}) {
+export default function compress(file: File, config: ConfigT = {} as ConfigT) {
   const { maxWidth = 400, maxHeight = 300, quality = 0.8 } = config
   return new Promise((resolve, reject) => {
     try {
-      let reader = new window.FileReader()
-      let img = new window.Image()
+      let reader: any = new window.FileReader()
+      let img: any = new window.Image()
       if (file.type.indexOf('image') === 0) {
         reader.readAsDataURL(file)
       }
 
-      reader.onload = (e) => {
+      reader.onload = (e: any) => {
         img.src = e.target.result
       }
 

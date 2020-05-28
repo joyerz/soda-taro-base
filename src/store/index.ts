@@ -4,6 +4,7 @@ import { APP_NAME } from 'config/index'
 import rootReducer from './reducers'
 import rootSaga from './sagas'
 
+declare const window: any
 
 const sagaMiddleware = createSagaMiddleware()
 

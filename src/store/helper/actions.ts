@@ -1,6 +1,6 @@
 
 export default null
 
-export const Actions: ActionsD = {}
+export const Actions: ActionsD = {} as ActionsD
 
 

@@ -13,7 +13,7 @@ interface State {
   state1: string
 }
 
-@connect((state: TState) => ({
+@connect<Props>((state: TState) => ({
   list: state.${funName}.list
 }))
 class ${funName} extends Component<Props, State> {

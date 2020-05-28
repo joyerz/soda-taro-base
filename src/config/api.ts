@@ -1,5 +1,6 @@
 import { API_HOST } from 'config/index'
 
 export default {
-  login: API_HOST + '/fleetab/vehicle/list'
+  loadWxSign: '', // 获取微信签名
+  login: API_HOST + '/fleetab/vehicle/list',
 }

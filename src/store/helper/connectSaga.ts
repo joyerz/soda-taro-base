@@ -1,7 +1,6 @@
 import { put, call, takeLatest, select, delay } from 'redux-saga/effects'
 import fetchMethod from 'utils/fetch'
 import { underScoreToCamel, notNullOrUndefiend } from './common'
-// import { options } from './settings'
 import { Actions } from './actions'
 import store from '..'
 
@@ -40,6 +39,7 @@ type reducerType = {
     RESET: string
   }
   reducer: any
+  actionName: string
 }
 
 
@@ -65,19 +65,19 @@ const getState = function* (child) {
 /**
  * 创建reduce时自动关联saga
  */
-export default reduxer => (...args) => {
-  const redux = reduxer.call(null, ...args)
-  const name = underScoreToCamel(args[0])
+export default reduxer => (actionName, ...args) => {
+  const redux = reduxer.call(null, actionName, ...args)
+  const name = underScoreToCamel(actionName)
 
   allActions[name] = redux.actions
   
   if (Actions[name]) {
     console.error(`Actions.${name}已存在! 请重新命名。`)
   }
-  Actions[name] = {}
+  Actions[name] = {} as CommonActions
 
   for (const action in redux.actions) {
-    Actions[name][action] = payload => store.dispatch(redux.actions[action](payload))
+    Actions[name][action] = payload => store.dispatch(redux.actions[action](payload) as never)
   }
 
   return (conf: configType): reducerType => {

@@ -184,7 +184,7 @@ export const blurAdjust = () => {
     }
     if (/(iPhone|iPad|iPod|iOS)/i.test(ua)) {
       try {
-        document.activeElement.scrollIntoViewIfNeeded()
+        (document as any).activeElement.scrollIntoViewIfNeeded()
       } catch (error) {
         console.log(error)
       }

@@ -10,7 +10,6 @@ interface CommonActions<P1 = {}, P2 = {}, P3 = {}> {
   error: (params?: P3) => any
 }
 
-interface ActionsD {
-  IndexBanner: CommonActions<Payload<{ name: string }>>
-	// __PUSH_DATA
+interface ActionsType {
+  [x: string]: CommonActions<Payload<{ name: string }>>
 }

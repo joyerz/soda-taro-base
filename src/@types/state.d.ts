@@ -1,3 +1,6 @@
+import * as Index from '../pages/Index/redux'
+// __PUSH_IMPORT
+
 interface InitState<T = {}> {
   loading: boolean
   error: boolean
@@ -19,9 +22,10 @@ interface User {
   age: number
 }
 
+
 interface TState {
   Index: {
-    list: InitState<Entries<User>>
+    [k in Exclude<keyof typeof Index, 'MODULE_NAME'>]: InitState<Entries>
   }
 	// __PUSH_DATA
 }

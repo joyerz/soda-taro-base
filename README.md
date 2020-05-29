@@ -1,5 +1,6 @@
 # Mobile App By Taro
 
+
 > used：Taro、redux、redux-saga、sass、Typescript  (nodejs v10.15.1、@tarojs/cli v2.0.7)
 
 ### TaroCli 全局安装 **(必须)**
@@ -33,7 +34,7 @@ $ npm run dev:h5 / yarn dev:h5
 
 ```bash
 # 务必安装全局工具 soda-bo-cli
-$ sbc taropage PageName   # 支持多级目录 例如： sbc taropage User/Update
+$ sbc new PageName   # 支持多级目录 例如： sbc new User/Update
 ```
 
 
@@ -45,48 +46,49 @@ $ npm run build:** / yarn build:**
 
 ### 关于数据流
 
-大致流程和BO一致，eg:
+创建reducer 和 action(插件会遍历`src/pages`下的所有`redux.ts`文件):
+
 ```javascript
-// pages/Index/redux.ts
+// src/pages/Index/redux.ts
+
 export const list = buildRedux('IndexBanner')({
   url: api.login,  // * (payload, {getState}) => '/url'
   method: 'get',
-  // *data(payload, { put }) { return {} },  // * 请求发送的数据处理，返回一个新的
-  // *onResult(res, payload: IndexBannerPayload, { put }) { return {} },   // * 处理数据返回一个新的数据
-  // *onAfter() {},  // * action.success 后 执行的操作
-  // *onError() {},  // *  错误处理
+})
+export const detail = buildRedux('BannerDetail')({
+  url: api.login,  // * (payload, {getState}) => '/url'
+  method: 'get',
 })
 ```
-但是 **合并还是需要手动操作**：
-```js
-// pages/Index/redux.ts
-export default combineReducers({
-  list: list.reducer,
-})
+
+以上会创建: 
+|state|action|
+|-|-|
+|`state.Index.list`|`Action.IndexBanner.start()/Action.IndexBanner.start()...`|
+|`state.Index.detail`|`Action.BannerDetail.start()/Action.BannerDetail.start()...`|
+
+> `state.Index.list` 和 `state.Index.detail` 中的 `Index` 为 文件夹名称 `pages/Index/redux.ts` 中的`Index`（多级目录 `/pages/User/Login => UserLogin``）。buildRedux` 中的第一个参数则是 `Action`的名称。
+
+> `Action` 为 `import { Action } from 'store/helper'` 提供
+
+***你依然可以通过`connect`方法来连接调用 =>` @connect(state => {...}, dispatch => {...})`***
+
+state关联数据：
+
+`'store/helper'` 提供了 `inject` 方法(此方法只能关联整个模块到组件,且不能自定义名称, 只是提供了自能提示)：
+```tsx
+import { inject } from 'store/helper'
+
+@inject('Index')
+class Home extends Taro.PureComponent {
+  componentDidMount() {
+    this.props.Index // {list: {...}, detail: {...}}
+  }
+}
 ```
+> `inject` 参数为字符串 或者 数组
+
 
 state结构图为：
 
 ![](./redux.png)
-
-在action方面，提供了全局Action变量：
-```js
-import { Actions } from 'store/helper/actions'
-
-
-// IndexBanner 为 buildRedux('IndexBanner') 中的名称
-Actions.IndexBanner.start()
-
-```
-所以，在 connect 可以只关联state， 即：
-
-```js
-@connect((state: TState) => ({
-  list: state.Coupon.list
-}))
-class Coupon extends Component<Props, State> {
-  componentDidMount() {
-    Actions.IndexBanner.start()
-  }
-}
-```

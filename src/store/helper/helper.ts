@@ -78,6 +78,7 @@ export const buildRedux = (actionName, defaultData = {}) => {
       RESET,
     },
     reducer,
+    actionName,
   }
 }
 

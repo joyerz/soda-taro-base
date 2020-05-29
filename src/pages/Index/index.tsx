@@ -1,21 +1,20 @@
 import Taro, { Component, CommonPageConfig } from '@tarojs/taro'
-import { View } from '@tarojs/components'
-import { connect, } from '@tarojs/redux'
-import { Actions } from 'store/helper/actions'
+import { View, } from '@tarojs/components'
+import { InitState, Entries, TState } from 'src/@types/state'
+import { Action, injcet } from 'store/helper'
 
 import style from './index.module.scss'
 
 interface Props {
   list?: InitState<Entries>
+  Index: TState['Index']
 }
 
 interface State {
   state1: string
 }
 
-@connect<Props>((state: TState) => ({
-  list: state.Index.list,
-}))
+@injcet(['Index'])
 class Index extends Component<Props, State> {
 
   config: CommonPageConfig = {
@@ -23,7 +22,7 @@ class Index extends Component<Props, State> {
   }
 
   componentDidMount() {
-    Actions.IndexBanner.start()
+    Action.IndexBanner.start()
   }
 
   render() {

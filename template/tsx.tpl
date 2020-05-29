@@ -1,7 +1,7 @@
 import Taro, { Component, CommonPageConfig } from '@tarojs/taro'
+import { InitState, Entries } from 'src/@types/state'
+import { injcet, Action } from 'store/helper'
 import { View } from '@tarojs/components'
-import { connect, } from '@tarojs/redux'
-import { Actions } from 'store/helper/actions'
 
 import style from './index.module.scss'
 
@@ -13,9 +13,7 @@ interface State {
   state1: string
 }
 
-@connect<Props>((state: TState) => ({
-  list: state.${funName}.list
-}))
+@injcet(['${funName}'])
 class ${funName} extends Component<Props, State> {
 
   config: CommonPageConfig = {
@@ -23,7 +21,7 @@ class ${funName} extends Component<Props, State> {
   }
 
   componentDidMount() {
-    Actions.${funName}.start()
+    Action.${funName}.start()
   }
 
   render() {

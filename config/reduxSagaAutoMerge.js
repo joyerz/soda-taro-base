@@ -89,8 +89,8 @@ class ReduxSagaAutoMergePlugin {
     files.forEach((file) => {
       const { filepwd, moduleName } = this.relativePathAndMode(file)
       // if (!this.checkRepeat(filepwd, moduleName)) return
-      importRedux += `import ${moduleName} from '${filepwd}'\n`
-      combineRedux += `${moduleName},\n\t`
+      importRedux += `import * as ${moduleName} from '${filepwd}'\n`
+      combineRedux += `...ModuleSplit(${moduleName}, '${moduleName}'),\n\t`
     })
 
     if (cache.importRedux !== importRedux || cache.combineRedux !== combineRedux) {

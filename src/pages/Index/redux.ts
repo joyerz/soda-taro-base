@@ -1,5 +1,4 @@
 import { buildRedux } from 'store/helper'
-import { combineReducers } from 'redux'
 import api from 'config/api'
 
 export type IndexBannerPayload = Payload<{
@@ -16,6 +15,7 @@ export const list = buildRedux('IndexBanner')({
   // *onError() {},  // *  错误处理
 })
 
-export default combineReducers({
-  list: list.reducer,
+export const detail = buildRedux('BannerDetail')({
+  url: api.login,  // * (payload, {getState}) => '/url'
+  method: 'get',
 })

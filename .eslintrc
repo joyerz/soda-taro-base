@@ -6,6 +6,8 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
     "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
     "@typescript-eslint/no-explicit-any": "off",
+    "ban-ts-ignore": true,
+    "ban-ts-comment": true,
     "react/sort-comp": false,
     "@typescript-eslint/member-delimiter-style": ["error", {
       "multiline": {

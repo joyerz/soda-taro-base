@@ -76,7 +76,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Index />
+        <Index {...{} as any} />
       </Provider>
     )
   }

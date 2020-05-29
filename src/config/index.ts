@@ -2,7 +2,7 @@
 export const VERSION = '1.0.0'
 
 // 应用名称
-export const APP_NAME = 'taro_app'
+export const APP_NAME = 'CoverMaker'
 
 // 本地储存前缀
 export const STORAGE_PREFIX = 'APP_'

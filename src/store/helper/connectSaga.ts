@@ -77,7 +77,9 @@ export default reduxer => (actionName, ...args) => {
   Actions[name] = {} as CommonActions
 
   for (const action in redux.actions) {
-    Actions[name][action] = payload => store.dispatch(redux.actions[action](payload) as never)
+    Actions[name][action] = data => new Promise(resolve => {
+      store.dispatch(redux.actions[action](data, resolve) as never)
+    })
   }
 
   return (conf: configType): reducerType => {
@@ -117,9 +119,9 @@ function* createWatcher(redux, conf: configType) {
         data = yield call(data as any, payload, callbackConfig)
       }
 
-      if (Object.prototype.toString.call(data) === '[object Object]' && payload.params) {
+      if (Object.prototype.toString.call(data) === '[object Object]' && payload.data) {
         data = {
-          ...payload.params,
+          ...payload.data,
         }
       }
 

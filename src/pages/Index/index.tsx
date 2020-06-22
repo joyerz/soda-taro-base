@@ -21,8 +21,9 @@ class Index extends Component<Props, State> {
     navigationBarTitleText: 'title',
   }
 
-  componentDidMount() {
-    Action.IndexBanner.start()
+  async componentDidMount() {
+    await Action.IndexBanner.start({ dd: 123 })
+    console.log(this.props.Index)
   }
 
   render() {

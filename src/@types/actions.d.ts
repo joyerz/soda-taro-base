@@ -11,5 +11,5 @@ interface CommonActions<P1 = {}, P2 = {}, P3 = {}> {
 }
 
 interface ActionsType {
-  [x: string]: CommonActions<Payload<{ name: string }>>
+  [x: string]: CommonActions
 }

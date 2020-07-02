@@ -28,6 +28,9 @@ $ npm install / yarn install
 
 ``` bash
 $ npm run dev:h5 / yarn dev:h5
+
+# Mac
+$ ./run.sh dev:h5
 ```
 
 ### 新增路由

@@ -6,6 +6,8 @@ export type IndexBannerPayload = Payload<{
   page: number
 }>
 
+export const MODULE_NAME = ''
+
 export const list = buildRedux('IndexBanner')({
   url: api.login,  // * (payload, {getState}) => '/url'
   method: 'get',

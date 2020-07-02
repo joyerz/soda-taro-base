@@ -1,4 +1,5 @@
 config/
+ci/
 dist/
 tpl.js
 test.js

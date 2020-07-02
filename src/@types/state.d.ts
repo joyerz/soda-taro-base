@@ -23,9 +23,13 @@ interface User {
 }
 
 
-interface TState {
-  Index: {
-    [k in Exclude<keyof typeof Index, 'MODULE_NAME'>]: InitState<Entries>
-  }
-	// __PUSH_DATA
+type ModuleName<T, D> = T extends '' ? D : T
+
+type IndexModule = {
+	[k in ModuleName<typeof Index['MODULE_NAME'], 'Index'>]: {
+		[k in Exclude<keyof typeof Index, 'MODULE_NAME'>]: InitState<Entries>
+	}
 }
+// __PUSH_DATA
+type TState = IndexModule 
+	// __PUSH_DATA_&

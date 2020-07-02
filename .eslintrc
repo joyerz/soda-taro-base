@@ -2,9 +2,10 @@
   "extends": ["taro", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "rules": {
-    "no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
+    "no-unused-vars": ["off", { "varsIgnorePattern": "Taro" }],
+    "no-use-before-define": ["off"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
-    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
+    "@typescript-eslint/no-unused-vars": ["off", { "varsIgnorePattern": "Taro" }],
     "@typescript-eslint/no-explicit-any": "off",
     "ban-ts-ignore": true,
     "ban-ts-comment": true,
@@ -20,7 +21,9 @@
       }
     }],
     "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/no-empty-function": ["warn"]
+    "@typescript-eslint/no-empty-function": ["warn"],
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/no-use-before-define": 0
   },
   "parserOptions": {
     "ecmaFeatures": {

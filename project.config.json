@@ -3,6 +3,7 @@
   "projectname": "taroLayout",
   "description": "sodaTaroLayout",
   "appid": "touristappid",
+  "version": "1.0.0",
   "setting": {
     "urlCheck": true,
     "es6": false,

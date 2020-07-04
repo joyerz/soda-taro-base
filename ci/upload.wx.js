@@ -4,7 +4,7 @@ const os = require('os')
 const path = require('path')
 const { version, appid, } = require('../project.config.json')
 
-const desc = os.hostname() + new Date() + ' UPLOAD.'
+const desc = os.hostname() + new Date() + ' UPLOAD' + (process.argv[2] || '')
 
 !async function () {
   const project = new ci.Project({

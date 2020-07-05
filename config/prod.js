@@ -1,6 +1,6 @@
 const ReduxSagaAutoMerge = require('./reduxSagaAutoMerge')
 
-ReduxSagaAutoMerge.convertRedux()
+ReduxSagaAutoMerge.convertingFiles()
 
 module.exports = {
   env: {
